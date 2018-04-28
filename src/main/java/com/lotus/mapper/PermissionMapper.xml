@@ -3,10 +3,11 @@
 <mapper namespace="com.lotus.dao.PermissionMapper" >
   <resultMap id="BaseResultMap" type="com.lotus.model.Permission" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="permissionName" property="permissionname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, permissionName
+    id, description, permissionName
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -19,14 +20,19 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lotus.model.Permission" >
-    insert into t_permission (id, permissionName)
-    values (#{id,jdbcType=INTEGER}, #{permissionname,jdbcType=VARCHAR})
+    insert into t_permission (id, description, permissionName
+      )
+    values (#{id,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{permissionname,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.lotus.model.Permission" >
     insert into t_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="description != null" >
+        description,
       </if>
       <if test="permissionname != null" >
         permissionName,
@@ -36,6 +42,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
       <if test="permissionname != null" >
         #{permissionname,jdbcType=VARCHAR},
       </if>
@@ -44,6 +53,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lotus.model.Permission" >
     update t_permission
     <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
       <if test="permissionname != null" >
         permissionName = #{permissionname,jdbcType=VARCHAR},
       </if>
@@ -52,7 +64,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lotus.model.Permission" >
     update t_permission
-    set permissionName = #{permissionname,jdbcType=VARCHAR}
+    set description = #{description,jdbcType=VARCHAR},
+      permissionName = #{permissionname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <cache />

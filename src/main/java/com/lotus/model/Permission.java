@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Permission implements Serializable {
     private Integer id;
 
+    private String description;
+
     private String permissionname;
 
     private static final long serialVersionUID = 1L;
@@ -15,6 +17,14 @@ public class Permission implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public String getPermissionname() {
@@ -32,6 +42,7 @@ public class Permission implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", description=").append(description);
         sb.append(", permissionname=").append(permissionname);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
